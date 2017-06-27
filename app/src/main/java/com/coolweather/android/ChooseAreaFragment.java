@@ -47,7 +47,7 @@ public class ChooseAreaFragment extends Fragment {
     private List<String> dataList=new ArrayList<>();
 
     //省列表
-    private List<Province> provincesList;
+    private List<Province> provinceList;
 
     //市列表
     private List<City> cityList;
@@ -83,7 +83,7 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentLevel==LEVEL_PROVINCE){
-                    selectedProvince=provincesList.get(position);
+                    selectedProvince=provinceList.get(position);
                     queryCities();
                 }else if (currentLevel==LEVEL_CITY){
                     selectedCity=cityList.get(position);
@@ -110,10 +110,10 @@ public class ChooseAreaFragment extends Fragment {
     private void queryProvinces() {
         titleText.setText("中国");
         backButton.setVisibility(View.GONE);
-        provincesList=DataSupport.findAll(Province.class);
-        if (provincesList.size()>0){
+        provinceList=DataSupport.findAll(Province.class);
+        if (provinceList.size()>0){
             dataList.clear();
-            for (Province province:provincesList){
+            for (Province province:provinceList){
                 dataList.add(province.getProvinceName());
             }
             adapter.notifyDataSetChanged();
@@ -142,7 +142,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel=LEVEL_CITY;
         }else {
             int provinceCode=selectedProvince.getProvinceCode();
-            String address="http://guolin.tech/api/china"+provinceCode;
+            String address="http://guolin.tech/api/china/"+provinceCode;
             queryFromServer(address,"city");
         }
     }
@@ -162,7 +162,7 @@ public class ChooseAreaFragment extends Fragment {
         }else {
             int provinceCode=selectedProvince.getProvinceCode();
             int cityCode=selectedCity.getCityCode();
-            String address="http://guolin.tech/api/china"+provinceCode+"/"+cityCode;
+            String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
             queryFromServer(address,"county");
         }
     }
